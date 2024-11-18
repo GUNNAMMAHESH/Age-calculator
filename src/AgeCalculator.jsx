@@ -6,7 +6,7 @@ function AgeCalculator() {
     year: 0,
     month: 0,
     days: 0,
-    error:""
+    error: "",
   });
 
   const handleAge = (e) => {
@@ -20,8 +20,6 @@ function AgeCalculator() {
     month = parseInt(month);
     days = parseInt(days);
     // console.log( typeof year);
-    // console.log( typeof month);
-    // console.log( typeof days);
 
     const presentDate = new Date();
 
@@ -52,7 +50,7 @@ function AgeCalculator() {
         presentDate.getMonth() - 1,
         0
       ).getDate();
-      console.log("yyyyyy", daysToAdded);
+      console.log("check", daysToAdded);
 
       days += daysToAdded;
     }
@@ -62,7 +60,7 @@ function AgeCalculator() {
       days,
       month,
       year,
-      error:""
+      error: "",
     });
 
     console.log("age", age);
@@ -87,15 +85,12 @@ function AgeCalculator() {
       </form>
       {!age.error && (
         <div className="flex justify-center space-x-5">
-        <span>year {age.year}</span>
-        <span>month {age.month}</span>
-
-        <span>days {age.days}</span>
-      </div>
+          <span>year {age.year}</span>
+          <span>month {age.month}</span>
+          <span>days {age.days}</span>
+        </div>
       )}
-      {age.error &&(
-        <p className="text-red-600">Invalid input</p>
-      )}
+      {age.error && <p className="text-red-600">{age.error}</p>}
     </div>
   );
 }
