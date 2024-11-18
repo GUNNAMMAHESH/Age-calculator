@@ -6,6 +6,7 @@ function AgeCalculator() {
     year: 0,
     month: 0,
     days: 0,
+    error:""
   });
 
   const handleAge = (e) => {
@@ -23,6 +24,12 @@ function AgeCalculator() {
     // console.log( typeof days);
 
     const presentDate = new Date();
+
+    if(new Date(birthDay)> presentDate){
+     Setage({...age,
+      error:"Age is not Calculated"})
+      return -1
+    }
     year = presentDate.getFullYear() - year;
     console.log("getFullYear", year);
 
@@ -55,6 +62,7 @@ function AgeCalculator() {
       days,
       month,
       year,
+      error:""
     });
 
     console.log("age", age);
@@ -77,12 +85,17 @@ function AgeCalculator() {
         ></input>
         {/* <input type="submit" onClick={submit}></input> */}
       </form>
-      <div className="flex justify-center space-x-5">
+      {!age.error && (
+        <div className="flex justify-center space-x-5">
         <span>year {age.year}</span>
         <span>month {age.month}</span>
 
         <span>days {age.days}</span>
       </div>
+      )}
+      {age.error &&(
+        <p className="text-red-600">Invalid input</p>
+      )}
     </div>
   );
 }
