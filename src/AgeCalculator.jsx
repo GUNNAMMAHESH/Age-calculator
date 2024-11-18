@@ -10,60 +10,70 @@ function AgeCalculator() {
   });
 
   const handleAge = (e) => {
-    const birthDay = e.target.value;
-    console.log("e.target.value", birthDay);
+    try {
+      const birthDay = e.target.value;
+      console.log("e.target.value", birthDay);
 
-    let [year, month, days] = birthDay.split("-");
-    console.log("after split", year, month, days);
+      let [year, month, days] = birthDay.split("-");
+      console.log("after split", year, month, days);
 
-    year = parseInt(year);
-    month = parseInt(month);
-    days = parseInt(days);
-    // console.log( typeof year);
+      year = parseInt(year);
+      month = parseInt(month);
+      days = parseInt(days);
+      // console.log( typeof year);
 
-    const presentDate = new Date();
+      const presentDate = new Date();
 
-    if(new Date(birthDay)> presentDate){
-     Setage({...age,
-      error:"Age is not Calculated"})
-      return -1
+      if (new Date(birthDay) > presentDate) {
+        Setage({ ...age, error: "Date should be past" });
+        return -1;
+      }
+      year = presentDate.getFullYear() - year;
+      console.log("getFullYear", year);
+
+      month = presentDate.getMonth() + 1 - month;
+      console.log("getMont", month);
+
+      days = presentDate.getDate() - days;
+      console.log("getDate", days);
+
+      if (month < 0) {
+        year--;
+        month += 12;
+      }
+
+      if (days < 0) {
+        month--;
+        if (month < 0) {
+          year--;
+          month += 12;
+        }
+        month = presentDate.getMonth() + 1;
+        let daysToAdded = new Date(
+          presentDate.getFullYear(),
+          presentDate.getMonth() - 1,
+          0
+        ).getDate();
+        console.log("check", daysToAdded);
+
+        days += daysToAdded;
+      }
+
+      Setage({
+        birthDay,
+        days,
+        month,
+        year,
+        error: "",
+      });
+
+      console.log("age", age);
+    } catch (error) {
+      Setage({
+        ...age,
+        error,
+      });
     }
-    year = presentDate.getFullYear() - year;
-    console.log("getFullYear", year);
-
-    month = presentDate.getMonth() + 1 - month;
-    console.log("getMonth", month);
-
-    days = presentDate.getDate() - days;
-    console.log("getDate", days);
-
-    if (month < 0) {
-      year--;
-      month += 12;
-    }
-
-    if (days < 0) {
-      year--;
-      month = presentDate.getMonth() + 1;
-      let daysToAdded = new Date(
-        presentDate.getFullYear(),
-        presentDate.getMonth() - 1,
-        0
-      ).getDate();
-      console.log("check", daysToAdded);
-
-      days += daysToAdded;
-    }
-
-    Setage({
-      birthDay,
-      days,
-      month,
-      year,
-      error: "",
-    });
-
-    console.log("age", age);
   };
 
   // const submit = () => {
